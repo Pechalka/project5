@@ -54,7 +54,7 @@ var menu = React.createClass({
 		    		<NavItem eventKey={3} href={this.makeHref('about')}>about projet</NavItem>
 				</Nav>
 				<Nav navbar right>
-					<OverlayTrigger trigger="click" placement="bottom" overlay={loginOverlay}>
+					<OverlayTrigger rootClose={true} trigger="click" placement="bottom" overlay={loginOverlay}>
 		    			<NavItem  eventKey={4} >log in</NavItem>
 		    		</OverlayTrigger>
 		    	</Nav>
