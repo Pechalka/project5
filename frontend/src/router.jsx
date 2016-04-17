@@ -20,8 +20,7 @@ var routes = (
 			<Route name="project-details" handler={require('pages/projectDetails/')} path="projects/:id" />
 			<Route name="loginAsSupplire" handler={require('pages/loginAsSupplire/')} path="loginAsSupplire" />
 			<Route name="about" handler={require('pages/about/')} path="about" />
-
-
+			<Route name="registr" handler={require('pages/registr/')} path="registr" />
 		</Route>
 		<Route name="test" handler={require('pages/test/')} path="test" />
 

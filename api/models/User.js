@@ -22,6 +22,9 @@ module.exports = Waterline.Collection.extend({
             required: true
         },
         name: {
+            type: 'string'
+        },
+        accountType : {
             type: 'string',
             required: true
         }
