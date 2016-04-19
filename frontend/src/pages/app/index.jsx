@@ -10,6 +10,7 @@ var { auth } = require('utils/auth');
 
 var Menu = require('blocks/menu/index.jsx');
 
+var http = require('utils/http');
 
 var App = React.createClass({
 	componentWillMount: function() {
@@ -29,7 +30,15 @@ var App = React.createClass({
 	},
 	
 	logout : function(){
-		this.setState({ user : null })
+		this.setState({ user : null });
+		window.location = '#/';
+	},
+	
+	login : function(form){
+		http.post('/api/login', form)
+			.then(() => {
+				window.location = '/';
+			})
 	},
 
 	getInitialState: function() {
@@ -40,7 +49,7 @@ var App = React.createClass({
 	//mixins : [Authentication],
 	render: function() {
 		return <div>
-			<Menu user={this.state.user} onLogout={this.logout}/>
+			<Menu user={this.state.user} onLogout={this.logout} onLogin={this.login}/>
 			<RouteHandler user={this.state.user}/>
 		</div>
 	}
