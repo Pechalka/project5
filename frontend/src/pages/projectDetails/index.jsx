@@ -27,6 +27,7 @@ var ProjectDetails = React.createClass({
 						<p>description:{project.description}</p>
 						<p>language:{project.language}</p>
 						<p>budget:{project.budget}</p>
+						<p>project duration:{project.projectDuration}</p>
 					</Col>
 				</Row>
 			</Grid>

@@ -11,6 +11,7 @@ var { Navigation } = require('react-router');
 var ProjectsList = React.createClass({
 	mixins : [Navigation],
 	renderProject : function(project){
+		
 		const href = this.makeHref('project-details', { id : project.id });
 		return (
 			<Panel header={<h3>{project.title}</h3>}>

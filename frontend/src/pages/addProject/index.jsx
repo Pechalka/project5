@@ -15,7 +15,8 @@ var AddProjectForm = React.createClass({
 			title : '',
 			description : '' ,
 			language : 'en',
-			budget : 0
+			budget : 0,
+			projectDuration: 1
 		};
 	},
 	submit : function(e){
@@ -34,6 +35,7 @@ var AddProjectForm = React.createClass({
 				<Input valueLink={this.linkState('language')} type="select" label="language" placeholder="language">
 			      {options}
 			    </Input>
+			    <Input valueLink={this.linkState('projectDuration')} label="project duration" type="text" />
 				<Input valueLink={this.linkState('description')} label="description" type="textarea" />
 				<Button type="submit">start project</Button>
 			</form>
@@ -45,6 +47,7 @@ var AddProject = React.createClass({
 	mixins : [Navigation],
 
 	createProject : function(form){
+		debugger
 		http.post('/api/projects', form)
 			.then(() => {
 				this.transitionTo('/');
