@@ -34,6 +34,8 @@ module.exports = {
             {
     	      test: /\.jsx?$/, // A regexp to test the require path. accepts either js or jsx
     	      loader: 'babel' // The module to load. "babel" is short for "babel-loader"
+              ,
+      exclude: /(node_modules|bower_components)/
             },
             {
                 test: /\.css$/, // Only .css files
@@ -79,6 +81,12 @@ module.exports = {
             template: './src/index.html',
             production: true,
         }),
+        new webpack.DefinePlugin({
+            'process.env': {
+              'NODE_ENV': JSON.stringify('production')
+            }
+        }),
+        new webpack.optimize.DedupePlugin(),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery",
