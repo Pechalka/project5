@@ -37,22 +37,22 @@ var Registr = React.createClass({
 		var benefits;
 		if (this.state.accountType == 'client'){
 			benefits = (
-				<Panel header={<h3>Плишки дял клиента</h3>}>
+				<Panel header={<h3>We are better, because:</h3>}>
 					<ul>
-						<li>Плюшка 1</li>
-						<li>Плюшка 2</li>
-						<li>Плюшка 3</li>
+						<li>Reason 1</li>
+						<li>Reason 2</li>
+						<li>Reason 3</li>
 					</ul>
 				</Panel>
 			);
 		} else {
 			benefits = (
-				<Panel header={<h3>Плишки дял Supplier</h3>}>
+				<Panel header={<h3>What you get:</h3>}>
 					<ul>
-						<li>Плюшка 1</li>
-						<li>Плюшка 2</li>
-						<li>Плюшка 3</li>
-						<li>Плюшка 3</li>
+						<li>What you get 1</li>
+						<li>What you get 2</li>
+						<li>What you get 3</li>
+						<li>What you get 4</li>
 					</ul>
 				</Panel>
 			);

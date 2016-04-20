@@ -63,7 +63,7 @@ var index = React.createClass({
 
 		let content = (
 			<div>
-				<h1>Welcome to our marketplace...</h1>
+				<h1>Hello !</h1>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora neque sapiente ullam fugit, officia possimus asperiores labore voluptate veniam reprehenderit, modi excepturi accusantium obcaecati atque ea. Ullam assumenda minus non.</p>	
 			</div>			
 		);
@@ -80,7 +80,11 @@ var index = React.createClass({
 					</Col>
 					<Col xs={4}>
 						<Panel header={<h3>links</h3>}>
-							settings
+							<div>Settings</div>
+							<div>Item placed </div>
+							<div>Item placed </div>
+							<div>Item placed </div>
+							<div> <a href="#">View more</a> </div>
 						</Panel>
 					</Col>
 				</Row>
