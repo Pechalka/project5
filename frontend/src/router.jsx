@@ -6,9 +6,9 @@ var { Route, Link, State, Redirect,
 	DefaultRoute } = Router;
 
 var Layout = require('pages/layout/index.jsx');
-var Dashboard = require('pages/dashboard/index.jsx')
-var AddProject = require('pages/addProject/')
-
+var Dashboard = require('pages/dashboard/index.jsx');
+var AddProject = require('pages/addProject/');
+var CompanyProfile = require('pages/companyProfile/')
 var App = require('pages/app/index.jsx');
 
 //add-project
@@ -21,6 +21,7 @@ var routes = (
 			<Route name="loginAsSupplire" handler={require('pages/loginAsSupplire/')} path="loginAsSupplire" />
 			<Route name="about" handler={require('pages/about/')} path="about" />
 			<Route name="registr" handler={require('pages/registr/')} path="registr" />
+			<Route name="companyProfile" handler={require('pages/companyProfile/')} path="profile" />
 		</Route>
 		<Route name="test" handler={require('pages/test/')} path="test" />
 

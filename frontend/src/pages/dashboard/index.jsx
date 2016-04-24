@@ -10,11 +10,14 @@ var { Navigation } = require('react-router');
 
 var ProjectsList = React.createClass({
 	mixins : [Navigation],
+
 	renderProject : function(project){
 		
 		const href = this.makeHref('project-details', { id : project.id });
+		const title = (<div className="clearfix"><h3 className="pull-left">{project.title}</h3><Button className='pull-right' bsStyle="success"> apply now </Button></div>);
 		return (
-			<Panel header={<h3>{project.title}</h3>}>
+			<Panel header={title}>
+			
 				<p>
 					{project.description}
 				</p>
@@ -69,7 +72,13 @@ var index = React.createClass({
 		);
 
 		if (user) {
-	    	content = <ProjectsList projects={this.state.projects} />;	
+			var accountType = user.accountType;
+			if(accountType == 'client') {
+	    		content = <ProjectsList projects={this.state.projects} />;
+	    	} else {
+	    		content = <div>  123 </div>
+ 
+	    	}	
 		}
 
 		return (

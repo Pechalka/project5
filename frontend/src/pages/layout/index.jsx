@@ -6,7 +6,7 @@ var { Grid, Button , Label, ListGroup, ListGroupItem, Input, Navbar, Nav, NavIte
 
 var Menu = require('blocks/menu/index.jsx');
 
-
+require('./index.css')
 var Layout = React.createClass({
 	mixins : [Navigation],
 	render: function() {

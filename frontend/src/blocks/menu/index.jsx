@@ -1,7 +1,7 @@
 var React = require('react');
 
 var { Panel, Button, Grid, Row, Col, Navbar, Nav, NavItem, CollapsibleNav, OverlayTrigger, Popover, Input } = require('react-bootstrap');
-var { Navigation } = require('react-router');
+var { Navigation, Link } = require('react-router');
 
 var { auth } = require('utils/auth');
 
@@ -22,13 +22,30 @@ var menu = React.createClass({
 		this.props.onLogin(params);
 	},
 	render: function() {
-		if (this.props.user){
-			
-			return <Navbar brand={<a href="#/">AppsDD</a>}  inverse toggleNavKey={0}>
+		var user = this.props.user;
+		if (user){
+			if(user.accountType == 'client') {
+				return <Navbar brand={<a href="#/">AppsDD</a>}  inverse toggleNavKey={0}>
 				<CollapsibleNav>
 		    	<Nav navbar left eventKey={0}> 
 		    		
 		    		<NavItem eventKey={3} href={this.makeHref('add-project')}><Button bsStyle="success">Start project now</Button></NavItem>
+				</Nav>
+		    	<Nav navbar right>
+		    		
+			    		<NavItem onClick={this.logOut} eventKey={4} ><Button bsStyle="danger">Logout</Button></NavItem>
+		    		
+		    	</Nav>
+		    	</CollapsibleNav>
+		  	</Navbar>			
+			}
+			
+			return <Navbar brand={<a href="#/">AppsDD</a>}  inverse toggleNavKey={0}>
+				<CollapsibleNav>
+		    	<Nav navbar left eventKey={0}> 
+		    		<NavItem eventKey={3} href={this.makeHref('companyProfile')}><Button bsStyle="success">Edit company profile</Button></NavItem>
+
+		    		
 				</Nav>
 		    	<Nav navbar right>
 		    		

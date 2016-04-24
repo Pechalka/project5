@@ -6,7 +6,18 @@ var { Navigation } = require('react-router');
 
 var http = require('utils/http');
 
-var languages = require('json!./languages.json')
+
+var languages = require('json!./languages.json');
+
+var currency = [
+	{ cur : '$US'},
+	{ cur : '€EUR'},
+	{ cur : '£GBP'}
+];
+var duration = [
+	{ duration : 'days'},
+	{ duration : 'month'},
+];
 
 var AddProjectForm = React.createClass({
 	mixins : [React.addons.LinkedStateMixin],
@@ -15,8 +26,10 @@ var AddProjectForm = React.createClass({
 			title : '',
 			description : '' ,
 			language : 'en',
-			budget : 0,
-			projectDuration: 1
+			budget : null,
+			currency: '$US',
+			duration: 'month',
+			projectDuration: null
 		};
 	},
 	submit : function(e){
@@ -27,16 +40,29 @@ var AddProjectForm = React.createClass({
 		var options = languages.map(l => (
 			<option value={l.code} key={l.code} >{l.name}</option>			    
 		));
-
+	
+		var currencies = currency.map(cur => (
+			<option value={cur.cur} key={cur.cur}>{cur.cur}</option> 
+		));
+		var durations  = duration.map(d  => (
+			<option value={d.duration} key={d.duration }>{d.duration}</option> 
+		));
 		return <div>
 			<form onSubmit={this.submit}>
-				<Input valueLink={this.linkState('title')} label="title" type="text" />
-				<Input valueLink={this.linkState('budget')} label="budget" type="text" />
-				<Input valueLink={this.linkState('language')} type="select" label="language" placeholder="language">
+				<Input placeholder="Project title" valueLink={this.linkState('title')} label="Title" type="text" />
+				<Input placeholder="1000" valueLink={this.linkState('budget')} label="Budget" type="text" />
+				<select valueLink={this.linkState('currency')}>
+   					{currencies}
+  				</select>
+
+				<Input valueLink={this.linkState('language')} type="select" label="Language" placeholder="language">
 			      {options}
 			    </Input>
-			    <Input valueLink={this.linkState('projectDuration')} label="project duration" type="text" />
-				<Input valueLink={this.linkState('description')} label="description" type="textarea" />
+			    <Input placeholder="6" valueLink={this.linkState('projectDuration')} label="Project duration" type="text" />
+			    <select valueLink={this.linkState('duration')}>
+   					{durations}
+  				</select>
+				<Input placeholder="Enter your description here..." valueLink={this.linkState('description')} label="Description" type="textarea" />
 				<Button type="submit">start project</Button>
 			</form>
 		</div>
@@ -47,7 +73,7 @@ var AddProject = React.createClass({
 	mixins : [Navigation],
 
 	createProject : function(form){
-		debugger
+
 		http.post('/api/projects', form)
 			.then(() => {
 				this.transitionTo('/');

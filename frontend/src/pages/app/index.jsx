@@ -10,6 +10,8 @@ var { auth } = require('utils/auth');
 
 var Menu = require('blocks/menu/index.jsx');
 
+var Footer = require('blocks/footer/index.jsx')
+
 var http = require('utils/http');
 
 var App = React.createClass({
@@ -51,6 +53,7 @@ var App = React.createClass({
 		return <div>
 			<Menu user={this.state.user} onLogout={this.logout} onLogin={this.login}/>
 			<RouteHandler user={this.state.user}/>
+			<Footer/>
 		</div>
 	}
 

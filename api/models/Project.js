@@ -32,6 +32,15 @@ module.exports = Waterline.Collection.extend({
         projectDuration : {
             type: 'integer',
            
+        },
+        currency : {
+            type: 'string',
+            required: true
+           
+        },
+        duration: {
+            type: 'string',
+            required: true
         }
     }
 });
