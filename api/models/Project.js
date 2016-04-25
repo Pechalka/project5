@@ -41,6 +41,10 @@ module.exports = Waterline.Collection.extend({
         duration: {
             type: 'string',
             required: true
+        },
+        selected: {
+            type: 'integer',
+            defaultsTo: 0
         }
     }
 });
