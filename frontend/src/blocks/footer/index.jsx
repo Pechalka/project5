@@ -1,10 +1,17 @@
 var React = require('react');
 require('./index.css');
+var {Grid, Col, Row} = require('react-bootstrap')
 var Footer = React.createClass({
 
 	render: function() {
 		return <footer>
-		<div>footer information is here</div>
+			<Grid>
+				<Row>
+					<Col xs={12}>
+						footer information is here
+					</Col>
+				</Row>
+			</Grid>
 		</footer>
 	}
 
