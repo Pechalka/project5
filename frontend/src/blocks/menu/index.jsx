@@ -1,86 +1,157 @@
 var React = require('react');
 
-var { Panel, Button, Grid, Row, Col, Navbar, Nav, NavItem, CollapsibleNav, OverlayTrigger, Popover, Input } = require('react-bootstrap');
-var { Navigation, Link } = require('react-router');
+var { Panel, Button, Grid, Row, Col, Navbar, Nav, NavItem, CollapsibleNav, OverlayTrigger, Popover, Input, NavDropdown, MenuItem } = require('react-bootstrap');
+var {  Link } = require('react-router');
 
 var { auth } = require('utils/auth');
 
-var menu = React.createClass({
-	mixins : [Navigation],
+
+var ClientMenu = React.createClass({
+	contextTypes: {
+    	router: React.PropTypes.object.isRequired
+  	},
+  	
+  	makeHref: function(name){
+  		return this.context.router.createHref(name);
+  	},
+
+	render: function(){
+		return (
+			<Navbar inverse>
+			    <Navbar.Header>
+			      <Navbar.Brand>
+			        <a href="#">AppsDD</a>
+			      </Navbar.Brand>
+			      <Navbar.Toggle />
+			    </Navbar.Header>
+			    <Navbar.Collapse>
+			      <Nav>
+			        <NavItem eventKey={1} href={this.makeHref('companyProfile')}><Button bsStyle="success">Edit company profile</Button></NavItem>
+			      </Nav>
+			      <Nav pullRight>
+			         <NavItem eventKey={2} onClick={this.props.logOut} >Logout</NavItem>
+			      </Nav>
+			    </Navbar.Collapse>
+			</Navbar>
+		);
+	}
+})
+
+var ProviderMenu = React.createClass({
+	contextTypes: {
+    	router: React.PropTypes.object.isRequired
+  	},
+  	
+  	makeHref: function(name){
+  		return this.context.router.createHref(name);
+  	},
+
+	render: function(){
+		return (
+			<Navbar inverse>
+			    <Navbar.Header>
+			      <Navbar.Brand>
+			        <a href="#">AppsDD</a>
+			      </Navbar.Brand>
+			      <Navbar.Toggle />
+			    </Navbar.Header>
+			    <Navbar.Collapse>
+			      <Nav>
+			        <NavItem eventKey={1} href={this.makeHref('add-project')}><Button bsStyle="success">Start project now</Button></NavItem>
+			      </Nav>
+			      <Nav pullRight>
+			        <NavItem eventKey={2} onClick={this.props.logOut} >Logout</NavItem>
+			      </Nav>
+			    </Navbar.Collapse>
+			</Navbar>
+		);
+	}
+})
+
+
+
+var NotAuthUserMenu = React.createClass({
+	contextTypes: {
+    	router: React.PropTypes.object.isRequired
+  	},
+  	
+  	makeHref: function(name){
+  		return this.context.router.createHref(name);
+  	},
+
+	login : function(e){
+		 e.stopPropagation()
+		e.preventDefault();
+		var form = document.querySelector('#js-login-form');// e.target;
+		var params = {
+			email : form.querySelector('input[name=email]').value,
+			password : form.querySelector('input[name=password]').value,			
+		}
+
+		this.props.onLogin(params);
+	},
+
+	render: function(){
+		var loginOverlay = (
+			<Popover id="login">
+				<form id="js-login-form" onSubmit={this.login}>
+					<Input name="email" placeholder="email" type="email"/>
+					<Input name="password" placeholder="password" type="password"/>
+					<Button type="submit" block bsStyle="primary">login</Button>
+				</form>
+			</Popover>
+		);
+
+		return (
+			<Navbar inverse>
+			    <Navbar.Header>
+			      <Navbar.Brand>
+			        <a href="#">AppsDD</a>
+			      </Navbar.Brand>
+			      <Navbar.Toggle />
+			    </Navbar.Header>
+			    <Navbar.Collapse>
+			      <Nav>
+			        <NavItem eventKey={1} href={this.makeHref('registr')}>Registration</NavItem>
+			        <NavItem eventKey={2} href={this.makeHref('about')}>About us</NavItem>
+			      </Nav>
+			      <Nav pullRight>
+			      	<OverlayTrigger rootClose={true} trigger="click" placement="bottom" overlay={loginOverlay}>
+				        <NavItem eventKey={2} href="#">Login</NavItem>
+			        </OverlayTrigger>
+			      </Nav>
+			    </Navbar.Collapse>
+			</Navbar>
+		);
+	}
+})
+
+
+var Menu = React.createClass({
 	logOut : function(){
 		auth.logout(()=>{
 			this.props.onLogout();
 		});
 	},
-	login : function(e){
-		e.preventDefault();
-		var form = e.target;
-		var params = {
-			email : form.querySelector('[name=email]').value,
-			password : form.querySelector('[name=password]').value,			
-		}
-		this.props.onLogin(params);
-	},
+
+
 	render: function() {
+		var menu = <NotAuthUserMenu onLogin={this.props.onLogin}/>;
 		var user = this.props.user;
 		if (user){
-			if(user.accountType == 'client') {
-				return <Navbar brand={<a href="#/">AppsDD</a>}  inverse toggleNavKey={0}>
-				<CollapsibleNav>
-		    	<Nav navbar left eventKey={0}> 
-		    		
-		    		<NavItem eventKey={3} href={this.makeHref('add-project')}><Button bsStyle="success">Start project now</Button></NavItem>
-				</Nav>
-		    	<Nav navbar right>
-		    		
-			    		<NavItem onClick={this.logOut} eventKey={4} ><Button bsStyle="danger">Logout</Button></NavItem>
-		    		
-		    	</Nav>
-		    	</CollapsibleNav>
-		  	</Navbar>			
-			}
-			
-			return <Navbar brand={<a href="#/">AppsDD</a>}  inverse toggleNavKey={0}>
-				<CollapsibleNav>
-		    	<Nav navbar left eventKey={0}> 
-		    		<NavItem eventKey={3} href={this.makeHref('companyProfile')}><Button bsStyle="success">Edit company profile</Button></NavItem>
-
-		    		
-				</Nav>
-		    	<Nav navbar right>
-		    		
-			    		<NavItem onClick={this.logOut} eventKey={4} ><Button bsStyle="danger">Logout</Button></NavItem>
-		    		
-		    	</Nav>
-		    	</CollapsibleNav>
-		  	</Navbar>			
-		} else {
-			var loginOverlay = (
-				<Popover>
-					<form onSubmit={this.login}>
-						<Input name="email" placeholder="email" type="email"/>
-						<Input name="password" placeholder="password" type="password"/>
-						<Button type="submit" block bsStyle="primary">login</Button>
-					</form>
-				</Popover>
-			);
-			return <Navbar brand={<a href="#/">AppsDD</a>}  inverse toggleNavKey={0}>
-				<CollapsibleNav>
-		    	<Nav navbar left eventKey={0}> 		    		
-		    		<NavItem eventKey={3} href={this.makeHref('registr')}><Button bsStyle="primary">Registration</Button></NavItem>
-		    		<NavItem eventKey={3} href={this.makeHref('about')}><Button bsStyle="success">About us</Button></NavItem>
-				</Nav>
-				<Nav navbar right>
-					<OverlayTrigger rootClose={true} trigger="click" placement="bottom" overlay={loginOverlay}>
-		    			<NavItem  eventKey={4} ><Button bsStyle="success">Login</Button></NavItem>
-		    		</OverlayTrigger>
-		    	</Nav>
-		    	</CollapsibleNav>
-		  	</Navbar>
+			menu = user.accountType == 'client' 
+				? <ClientMenu logOut={this.logOut}/>
+				: <ProviderMenu logOut={this.logOut}/>
 		}
 
+		return (
+			<div>
+				{menu}
+			</div>
+		);
 	}
 
 });
 
-module.exports = menu;
+
+module.exports = Menu;

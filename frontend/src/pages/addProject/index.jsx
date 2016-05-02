@@ -6,6 +6,7 @@ var { Navigation } = require('react-router');
 
 var http = require('utils/http');
 
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var languages = require('json!./languages.json');
 
@@ -20,7 +21,7 @@ var duration = [
 ];
 
 var AddProjectForm = React.createClass({
-	mixins : [React.addons.LinkedStateMixin],
+	mixins : [LinkedStateMixin],
 	getInitialState: function() {
 		return {
 			title : '',

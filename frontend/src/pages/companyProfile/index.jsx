@@ -1,8 +1,12 @@
 var React = require('react');
 var {Grid, Row, Col, Panel, Input, Button} = require('react-bootstrap');
 var http = require('utils/http')
+
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
+
+
 var companyProfile = React.createClass({
-	mixins : [React.addons.LinkedStateMixin],
+	mixins : [LinkedStateMixin],
 	getInitialState: function() {
 		return {
 			email: '',
@@ -96,7 +100,7 @@ var companyProfile = React.createClass({
 	return <Grid> 
 			<Row>
 				<Col xs={12}>
-					{!this.state.editMode && {content}} 
+					{!this.state.editMode && content } 
 					{this.state.editMode && <div> {editMode}</div>}
 				</Col>
 			</Row>

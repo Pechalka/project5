@@ -6,10 +6,12 @@ var cx = require('classnames');
 
 var http = require('utils/http');
 
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
+
 require('./index.css');
 
 var Registr = React.createClass({
-	mixins : [React.addons.LinkedStateMixin],
+	mixins : [LinkedStateMixin],
 	getInitialState: function() {
 		return {
 			accountType : 'client' ,

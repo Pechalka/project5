@@ -14,6 +14,8 @@ var Footer = require('blocks/footer/index.jsx')
 
 var http = require('utils/http');
 
+require('./index.css');
+
 var App = React.createClass({
 	componentWillMount: function() {
 		this.onChange = auth.onChange;
@@ -50,9 +52,12 @@ var App = React.createClass({
 	},
 	//mixins : [Authentication],
 	render: function() {
+		
+		//<RouteHandler user={this.state.user}/>
+
 		return <div>
 			<Menu user={this.state.user} onLogout={this.logout} onLogin={this.login}/>
-			<RouteHandler user={this.state.user}/>
+			{this.props.children}
 			<Footer/>
 		</div>
 	}

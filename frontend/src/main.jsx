@@ -1,8 +1,8 @@
 
+import React from 'react'
+import { render } from 'react-dom'
+const routes = require('./routes');
 
-// require('pages/layout/index.css');
-//var Layout = require('pages/layout/index.jsx');
+render(routes, document.getElementById('app'))
 
-require('react/addons');
 
-require('./router.jsx').run();
