@@ -30,9 +30,18 @@ var del = function(url){
 	})
 }
 
+var put = function(url, data){
+	return $.ajax({
+		type: 'PUT',
+		data: JSON.stringify(data),
+		contentType: 'application/json',
+		url : url
+	})
+}
 
 module.exports = {
 	get : get,
 	post : post,
-	del : del
+	del : del,
+	put : put
 }
