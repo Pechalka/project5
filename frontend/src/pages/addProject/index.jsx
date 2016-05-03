@@ -70,24 +70,15 @@ var AddProjectForm = React.createClass({
 	}
 })
 
+
 var AddProject = React.createClass({
-	mixins : [Navigation],
-
-	createProject : function(form){
-
-		http.post('/api/projects', form)
-			.then(() => {
-				this.transitionTo('/');
-			})
-	},
-
 
 	render: function() {
 		return <div>
 			<Grid >
 				<Row>
 					<Col xs={4}>
-						<AddProjectForm onCreate={this.createProject}/>
+						<AddProjectForm onCreate={this.props.createProject}/>
 					</Col>
 				</Row>
 			</Grid>	
@@ -97,4 +88,17 @@ var AddProject = React.createClass({
 
 });
 
-module.exports = AddProject;
+import {connect} from 'react-redux';
+import { createProject } from '../../actions';
+
+import { bindActionCreators  } from 'redux'
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ createProject }, dispatch)
+}
+
+module.exports = connect(function(state){
+	return {}
+},
+mapDispatchToProps
+)(AddProject);

@@ -2,7 +2,7 @@ var React = require('react');
 
 var { Panel, Button, Grid, Row, Col, Navbar, Nav, NavItem, DropdownButton, MenuItem,  ButtonToolbar, Badge} = require('react-bootstrap');
 
-import {connect} from 'react-redux';
+
 var { Navigation, Link } = require('react-router');
 
 var MyProject = React.createClass({
@@ -61,7 +61,7 @@ var MyProject = React.createClass({
 });
 
 
-var ProjectsList = React.createClass({
+var AvailableProjects = React.createClass({
 	select : function(project){
 		project.selected += 1;
 		http.put("api/projects/" + project.id, project);
@@ -113,22 +113,23 @@ var index = React.createClass({
   	makeHref: function(name){
   		return this.context.router.createHref(name);
   	},
-	getInitialState: function() {
-		return {
-			projects : [] 
-		};
-	},
-	loadProjects: function(){
-		return http.get('/api/projects')
-			.then((json) => this.setState({ projects : json }))
-	},
+
 	componentDidMount: function() {
-		this.loadProjects()
+		if (this.props.accountType == "client")
+			this.props.loadAvailableProjects();
+
+		if (this.props.accountType == "supplier")
+			this.props.loadMyProjects();
+		
+	//	alert(this.props.accountType);
+
+		//this.props.showDasboard()
 	},
-	onDelete : function(project){
-		http.del('/api/projects/' + project.id )
-			.then(this.loadProjects)
-	},
+
+	// componentWillReceiveProps: function(nextProps) {
+	// 	if ()
+	// },
+
 	renderItem : function(p){
 		var href = this.makeHref('tasks', { projectId : p.id })
 		return <li>
@@ -145,12 +146,13 @@ var index = React.createClass({
 			</div>			
 		);
 
+
 		if (accountType == 'client'){
-			content = <MyProject projects={this.state.projects} onDelete={this.onDelete} />;
+			content = <AvailableProjects projects={this.props.availableProjects} />;
 		}
 
 		if (accountType == 'supplier'){
-			content = <ProjectsList projects={this.state.projects} />;
+			content = <MyProject projects={this.props.myProjects} onDelete={this.props.deleteProject} />;
 		}
 
 
@@ -176,8 +178,23 @@ var index = React.createClass({
 
 });
 
+import {connect} from 'react-redux';
+
+import { loadMyProjects, deleteProject, showDasboard, loadAvailableProjects } from '../../actions';
+
+import { bindActionCreators  } from 'redux'
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ loadMyProjects, deleteProject, showDasboard, loadAvailableProjects }, dispatch)
+}
+
 module.exports = connect(function(state){
 	return {
-		accountType: state.auth.accountType
+		accountType: state.auth.accountType,
+		myProjects: state.app.myProjects,
+		availableProjects: state.app.availableProjects
 	}
-})(index);
+},
+mapDispatchToProps
+)(index);
+

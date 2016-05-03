@@ -32,8 +32,13 @@ var Registr = React.createClass({
 			password : this.state.password,
 			accountType : this.state.accountType
 		}
-		http.post('/api/users', data)
-			.then(() => this.setState({ isRegister : true }))
+
+		this.props.registerUser(data);
+
+		this.setState({ isRegister : true })
+	},
+	componentWillUnmount: function() {
+		this.props.resetRegistrationStatus();	
 	},
 	render: function() {
 		var benefits;
@@ -78,9 +83,9 @@ var Registr = React.createClass({
 			</form>
 		);
 
-		if (this.state.isRegister){
+		if (this.props.registrationStatus == "success"){
 			form = (<div>
-				<Alert bsStyle="success">
+				<Alert bsStyle="success" onDismiss={this.props.resetRegistrationStatus}>
 				    Account create <strong>success</strong>.
 				    <p>Now you can login as <strong>{this.state.email}</strong></p> 
 				</Alert>
@@ -108,4 +113,14 @@ var Registr = React.createClass({
 
 });
 
-module.exports = Registr;
+import { connect } from 'react-redux';
+import { bindActionCreators  } from 'redux'
+
+import { registerUser, resetRegistrationStatus } from '../../actions';
+
+module.exports = connect(
+	(state) => ({ registrationStatus : state.app.registrationStatus }),
+	(dispatch) => bindActionCreators({ registerUser, resetRegistrationStatus },dispatch)
+)(Registr);
+
+

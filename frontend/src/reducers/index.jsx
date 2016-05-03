@@ -19,7 +19,39 @@ function auth(state = initState, action){
 }
 
 
+
+const initAppState = {
+	myProjects: [],
+	availableProjects: [],
+	isLoading: false,
+	registrationStatus: null
+};
+
+function app(state = initAppState, action){
+	switch(action.type){
+		case "LOAD_MY_PROJECTS":
+			return {...state, isLoading: true, myProjects: [] };
+
+		case "LOAD_MY_PROJECTS_SUCCESS":
+			return {...state, isLoading: false, myProjects: action.payload };
+
+		case "REGISTRATION_SUCCESS":
+			return {...state, registrationStatus: "success" };
+		
+		case "RESET_REGISTRATION_STATUS":
+			return {...state, registrationStatus: null };
+
+		case "LOAD_AVAILABLE_PROJECTS_SUCCESS":
+			return {...state, availableProjects: action.payload };
+
+		default:
+			return state;
+	}
+}
+
+
 export default combineReducers({
- auth,
- router: routerStateReducer
+	auth,
+	app,
+	router: routerStateReducer
 });
