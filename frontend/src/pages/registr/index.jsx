@@ -4,8 +4,6 @@ var { Panel, Button, Grid, Row, Col, Navbar, Nav, NavItem, Input, FormControls, 
 
 var cx = require('classnames');
 
-var http = require('utils/http');
-
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 require('./index.css');

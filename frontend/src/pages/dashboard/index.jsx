@@ -15,12 +15,11 @@ var MyProject = React.createClass({
     	router: React.PropTypes.object.isRequired
   	},
   	
-  	makeHref: function(name){
-  		return this.context.router.createHref(name);
+  	makeHref: function(name, params){
+  		return this.context.router.createHref(name, null, params);
   	},
 	renderProject : function(project){
-		
-		const href = this.makeHref('project-details', { id : project.id });
+		const href = this.makeHref('projects/' + project.id);
 		const title = (<div className="clearfix"><h3 className="pull-left">{project.title}</h3>
 			<div className='pull-right'>
 				<ButtonToolbar>
@@ -70,12 +69,12 @@ var AvailableProjects = React.createClass({
     	router: React.PropTypes.object.isRequired
   	},
   	
-  	makeHref: function(name){
-  		return this.context.router.createHref(name);
+  	makeHref: function(name, params){
+  		return this.context.router.createHref(name, params);
   	},
 	renderProject : function(project){
 		
-		const href = this.makeHref('project-details', { id : project.id });
+		const href = this.makeHref('projects/' + project.id);
 		const title = (<div className="clearfix"><h3 className="pull-left">{project.title}</h3><Button onClick={this.select.bind(null, project)} className='pull-right' bsStyle="success"> apply now </Button></div>);
 		return (
 			<Panel header={title}>

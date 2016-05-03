@@ -15,7 +15,6 @@ var Menu = require('blocks/menu/index.jsx');
 
 var Footer = require('blocks/footer/index.jsx')
 
-var http = require('utils/http');
 
 require('./index.css');
 

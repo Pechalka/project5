@@ -15,10 +15,11 @@ var routes = ((
     <Route path="/" component={App}>
       <IndexRoute component={Dashboard}/>
       <Route component={Dashboard} name="dashboard" />
-	  <Route name="add-project" component={AddProject} path="add-project" />      
+	    <Route name="add-project" component={AddProject} path="add-project" />      
       <Route path="about" component={About}/>
       <Route path="registr" component={Registr}/>      
-      <Route path="history" component={require('pages/history/')}/>  
+      <Route path="registr" component={Registr}/>      
+      <Route path="projects/:id" component={require('pages/projectDetails/')}/>  
       <Route path="companyProfile" component={require('pages/companyProfile/')} />    
       <Route path="*" component={NoMatch}/>
     </Route>
