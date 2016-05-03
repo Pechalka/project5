@@ -8,10 +8,10 @@ var AddProject = require('pages/addProject/');
 var Dashboard = require('pages/dashboard/index.jsx');
 var NoMatch = require('pages/404/');
 
-
-
+// <Router history={hashHistory}>
+//   </Router>
 var routes = ((
-  <Router history={hashHistory}>
+  
     <Route path="/" component={App}>
       <IndexRoute component={Dashboard}/>
       <Route component={Dashboard} name="dashboard" />
@@ -22,7 +22,7 @@ var routes = ((
       <Route path="companyProfile" component={require('pages/companyProfile/')} />    
       <Route path="*" component={NoMatch}/>
     </Route>
-  </Router>
+
 ));
 
 module.exports = routes;

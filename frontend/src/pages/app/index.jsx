@@ -1,6 +1,9 @@
 var React = require('react');
-
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 var { RouteHandler } = require('react-router');
+
+import { logout, login } from '../../actions';
 
 var { Grid, Button , Label, ListGroup, ListGroupItem, Input, Navbar, Nav, NavItem } = require('react-bootstrap');
 
@@ -17,51 +20,31 @@ var http = require('utils/http');
 require('./index.css');
 
 var App = React.createClass({
-	componentWillMount: function() {
-		this.onChange = auth.onChange;
-	},
-	
-	onChange : function(user){
-		this.setState({
-			user : user
-		})
-	},
-
-	componentDidMount: function() {
-		auth.loggedIn((user) => {
-			this.setState({ user : user })
-		});
-	},
-	
 	logout : function(){
-		this.setState({ user : null });
-		window.location = '#/';
+		this.props.logout();
 	},
 	
 	login : function(form){
-		http.post('/api/login', form)
-			.then(() => {
-				window.location = '/';
-			})
+		this.props.login(form.email, form.password)
 	},
 
-	getInitialState: function() {
-		return {
-			user : null 
-		};
-	},
-	//mixins : [Authentication],
 	render: function() {
-		
-		//<RouteHandler user={this.state.user}/>
-
 		return <div>
-			<Menu user={this.state.user} onLogout={this.logout} onLogin={this.login}/>
+			<Menu  accountType={this.props.accountType} onLogout={this.logout} onLogin={this.login}/>
+			
 			{this.props.children}
+
 			<Footer/>
 		</div>
 	}
 
 });
 
-module.exports = App;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ logout, login }, dispatch)
+}
+
+module.exports = connect(
+	(state) => { return { accountType: state.auth.accountType }; }, 
+	mapDispatchToProps
+)(App);

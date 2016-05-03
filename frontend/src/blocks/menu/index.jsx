@@ -136,13 +136,18 @@ var Menu = React.createClass({
 
 
 	render: function() {
+		const { accountType } = this.props;
+
 		var menu = <NotAuthUserMenu onLogin={this.props.onLogin}/>;
-		var user = this.props.user;
-		if (user){
-			menu = user.accountType == 'client' 
-				? <ClientMenu logOut={this.logOut}/>
-				: <ProviderMenu logOut={this.logOut}/>
+
+		if (accountType == 'client'){
+			menu = <ClientMenu logOut={this.logOut}/>;
 		}
+
+		if (accountType == 'supplier') {
+			menu = <ProviderMenu logOut={this.logOut}/>;
+		}
+
 
 		return (
 			<div>

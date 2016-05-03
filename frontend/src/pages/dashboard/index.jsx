@@ -2,16 +2,22 @@ var React = require('react');
 
 var { Panel, Button, Grid, Row, Col, Navbar, Nav, NavItem, DropdownButton, MenuItem,  ButtonToolbar, Badge} = require('react-bootstrap');
 
-
+import {connect} from 'react-redux';
 var { Navigation, Link } = require('react-router');
 
 var MyProject = React.createClass({
-	 mixins : [Navigation],
 	select : function(project, eventKey){
 		if(eventKey == '1'){
 			this.props.onDelete(project)
 		}
 	},
+	contextTypes: {
+    	router: React.PropTypes.object.isRequired
+  	},
+  	
+  	makeHref: function(name){
+  		return this.context.router.createHref(name);
+  	},
 	renderProject : function(project){
 		
 		const href = this.makeHref('project-details', { id : project.id });
@@ -56,11 +62,17 @@ var MyProject = React.createClass({
 
 
 var ProjectsList = React.createClass({
-	mixins : [Navigation],
 	select : function(project){
 		project.selected += 1;
 		http.put("api/projects/" + project.id, project);
 	},
+	contextTypes: {
+    	router: React.PropTypes.object.isRequired
+  	},
+  	
+  	makeHref: function(name){
+  		return this.context.router.createHref(name);
+  	},
 	renderProject : function(project){
 		
 		const href = this.makeHref('project-details', { id : project.id });
@@ -94,7 +106,13 @@ var ProjectsList = React.createClass({
 var http = require('utils/http');
 
 var index = React.createClass({
-	mixins : [Navigation],
+	contextTypes: {
+    	router: React.PropTypes.object.isRequired
+  	},
+  	
+  	makeHref: function(name){
+  		return this.context.router.createHref(name);
+  	},
 	getInitialState: function() {
 		return {
 			projects : [] 
@@ -112,14 +130,13 @@ var index = React.createClass({
 			.then(this.loadProjects)
 	},
 	renderItem : function(p){
-		var href = '#/';
-		//this.makeHref('tasks', { projectId : p.id })
+		var href = this.makeHref('tasks', { projectId : p.id })
 		return <li>
 			<Button bsStyle="link" href={href}>{p.title}</Button>
 		</li>
 	},
 	render: function() {
-		var user = this.props.user;
+		const { accountType } = this.props;
 
 		let content = (
 			<div>
@@ -128,15 +145,14 @@ var index = React.createClass({
 			</div>			
 		);
 
-		if (user) {
-			var accountType = user.accountType;
-			if(accountType == 'client') {
-	    		content = <MyProject projects={this.state.projects} onDelete={this.onDelete} />;
-	    	} else {
-	    		content = <ProjectsList projects={this.state.projects} />;
- 
-	    	}	
+		if (accountType == 'client'){
+			content = <MyProject projects={this.state.projects} onDelete={this.onDelete} />;
 		}
+
+		if (accountType == 'supplier'){
+			content = <ProjectsList projects={this.state.projects} />;
+		}
+
 
 		return (
 	    	<Grid >
@@ -160,4 +176,8 @@ var index = React.createClass({
 
 });
 
-module.exports = index;
+module.exports = connect(function(state){
+	return {
+		accountType: state.auth.accountType
+	}
+})(index);
