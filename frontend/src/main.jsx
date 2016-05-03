@@ -10,7 +10,8 @@ import {ReduxRouter} from 'redux-router';
 import {applyMiddleware, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
 
-import createHistory from 'history/lib/createBrowserHistory';
+import createHistory from 'history/lib/createHashHistory';
+//'history/lib/createBrowserHistory';
 
 
 
