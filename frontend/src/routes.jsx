@@ -8,6 +8,8 @@ var AddProject = require('pages/addProject/');
 var Dashboard = require('pages/dashboard/index.jsx');
 var NoMatch = require('pages/404/');
 
+var Test = require('pages/test/');
+
 // <Router history={hashHistory}>
 //   </Router>
 var routes = ((
@@ -19,6 +21,7 @@ var routes = ((
       <Route path="about" component={About}/>
       <Route path="registr" component={Registr}/>      
       <Route path="registr" component={Registr}/>      
+      <Route path="test" component={Test} />
       <Route path="projects/:id" component={require('pages/projectDetails/')}/>  
       <Route path="companyProfile" component={require('pages/companyProfile/')} />    
       <Route path="*" component={NoMatch}/>

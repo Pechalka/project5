@@ -1,0 +1,46 @@
+
+.field {
+	display: block;
+	padding-bottom: 10px;
+}
+
+.field__label {
+	display: block;
+}
+
+.field__input {
+
+}
+
+.field__checbox-text {
+	padding-left: 10px;
+	display: inline-block;
+}
+
+.field--invalid .field__input {
+	border: 1px solid red;	
+}
+
+.field--invalid .field__error-msg {
+	padding-left: 10px;
+	display: inline-block;
+	color: red;
+}
+
+.order-form:after {
+	visibility: hidden;
+	display: block;
+	content: "";
+	clear: both;
+	height: 0;
+}
+
+.order-form__type {
+	float: left;
+	width: 50%;
+}
+
+.order-form__form {
+	float: right;
+	width: 50%;
+}
